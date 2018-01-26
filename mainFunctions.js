@@ -75,30 +75,8 @@ module.exports = {
         foundIndex = textString.indexOf(dictionary[x], foundIndex + 1);
       }
     }
-    // final output
-    var finalWords = this.removeDuplicates(matchedWords);
     // return final result, array of strings
-    return finalWords;
-  },
-
-  // eliminate duplicated words from array
-  removeDuplicates: function(wordsArray) {
-    var finalArray = [];
-    // loop through words array and match duplicated words as null
-    for (var z = 0; z < wordsArray.length; z++) {
-      for (var w = z + 1; w < wordsArray.length; w++) {
-        if (wordsArray[z] == wordsArray[w]) {
-          wordsArray[w] = null;
-        }
-      }
-    }
-    // push all positions other then null to final array
-    for (var d = 0; d < wordsArray.length; d++) {
-      if (wordsArray[d] != null) {
-        finalArray.push(wordsArray[d]);
-      }
-    }
-    return finalArray;
+    return matchedWords;
   }
 
 }

@@ -54,23 +54,13 @@ describe('mainFunctions module', () => {
     it('should return one phrase', () => {
       expect(mainFunctions.searchPhrases(testDictionary, testString5)).to.be.eql(['is dog ok'])
     })
-    var testString6 = "ok";
+    var testString6 = "cat cat cat cat";
     it('should return one phrase', () => {
-      expect(mainFunctions.searchPhrases(testDictionary, testString5)).to.be.eql(['is dog ok'])
+      expect(mainFunctions.searchPhrases(testDictionary, testString6)).to.be.eql(['cat'])
     })
-  })
-
-  describe('removeDuplicates function', () => {
-    it('should confirm existance of removeDuplicates function', () => {
-      expect(mainFunctions.removeDuplicates).to.be.a('function')
-    })
-    var testArray1 = ['one', 'one', 'two', 'three', 'two']
-    it('should return number 3 of array length', () => {
-      expect(mainFunctions.removeDuplicates(testArray1).length).to.be.eql(3)
-    })
-    var testArray2 = []
-    it('should return empty array', () => {
-      expect(mainFunctions.removeDuplicates(testArray2)).to.be.eql([])
+    var testString7 = "is dog ok one two three dog ok";
+    it('should return one phrase', () => {
+      expect(mainFunctions.searchPhrases(testDictionary, testString7)).to.be.eql(['is dog ok'])
     })
   })
 

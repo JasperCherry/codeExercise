@@ -30,7 +30,7 @@ describe('mainFunctions module', () => {
   })
 
   describe('searchPhrases function', () => {
-    var testDictionary = ["cat", "dog", "solenya"];
+    var testDictionary = ["cat", "dog", "solenya", "is dog ok", "ok"];
     it('should confirm existance of searchPhrases function', () => {
       expect(mainFunctions.searchPhrases).to.be.a('function')
     })
@@ -49,6 +49,14 @@ describe('mainFunctions module', () => {
     var testString4 = "some wordcat";
     it('should return empty array as word do not match perfectly', () => {
       expect(mainFunctions.searchPhrases(testDictionary, testString4)).to.be.eql([])
+    })
+    var testString5 = "is dog ok here";
+    it('should return one phrase', () => {
+      expect(mainFunctions.searchPhrases(testDictionary, testString5)).to.be.eql(['is dog ok'])
+    })
+    var testString6 = "ok";
+    it('should return one phrase', () => {
+      expect(mainFunctions.searchPhrases(testDictionary, testString5)).to.be.eql(['is dog ok'])
     })
   })
 

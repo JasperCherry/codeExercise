@@ -31,13 +31,12 @@ module.exports = {
 
   // searching for phrases in text (case sensitive)
   searchPhrases: function(dictionary, textString) {
-    // arrays for matched words and indexes where thy occur
-    var matchesWords = [];
-    var matchesIndexes = [];
+    // arrays for matched words where thy occur
+    var matchedWords = [];
     // search through dictionary for match
     for (var x = 0; x < dictionary.length; x++) {
       var foundIndex = textString.indexOf(dictionary[x]);
-      // search the string until all indexes of occurance are found
+      // search the string until all occurance are found
       while (foundIndex != -1) {
         // the matched word is valid if first position after last character is equal to empty space, coma or dot,
         // or the last position of the word is also the last position of searched string
@@ -45,19 +44,30 @@ module.exports = {
           // the first position before the word is equal to empty space, coma or dot
           // or the first position of the word is also first position of the searched string
           if ((textString[foundIndex - 1] == '.') || (textString[foundIndex - 1] == ',') || (textString[foundIndex - 1] == ' ') || (foundIndex == 0)) {
-            var addNew = true;
-            for (var z = 0; z < matchesIndexes.length; z++) {
-              // if the index was already found, check if the matching word is longer then previous
-              // if so, then replace it because the longer one is the correct one
-              if (foundIndex == matchesIndexes[z] && dictionary[x].length > matchesWords[z].length) {
-                matchesWords[z] = dictionary[x];
-                addNew = false;
+            // check if new matched string can be contain in other strings allready matched
+            var checkFurther = true;
+            for (var z = 0; z < matchedWords.length; z++) {
+              if (matchedWords[z].indexOf(dictionary[x]) != -1) {
+                checkFurther = false;
+                break;
               }
             }
-            // if the index of matched word is not in the array, add the matched word
-            if (addNew) {
-              matchesWords.push(dictionary[x]);
-              matchesIndexes.push(foundIndex);
+            // check if new matched string can contain other strings allready matched
+            // set null all that can be found in the new one
+            if (checkFurther) {
+              for (var z = 0; z < matchedWords.length; z++) {
+                if (dictionary[x].indexOf(matchedWords[z]) != -1) {
+                  matchedWords[z] = null;
+                }
+              }
+              matchedWords.push(dictionary[x]);
+              var newMatchedWords = [];
+              for (var d = 0; d < matchedWords.length; d++) {
+                if (matchedWords[d] != null) {
+                  newMatchedWords.push(matchedWords[d]);
+                }
+              }
+              matchedWords = newMatchedWords;
             }
           }
         }
@@ -66,7 +76,7 @@ module.exports = {
       }
     }
     // final output
-    var finalWords = this.removeDuplicates(matchesWords);
+    var finalWords = this.removeDuplicates(matchedWords);
     // return final result, array of strings
     return finalWords;
   },
